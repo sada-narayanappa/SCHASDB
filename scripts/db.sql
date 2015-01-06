@@ -41,4 +41,6 @@ CREATE UNIQUE INDEX "unique_reported_userId" ON env (reported_userid);
 CREATE UNIQUE INDEX unique_reported_userid ON health (reported_userid);
 CREATE UNIQUE INDEX unique_userid ON "user" (userid);
 
+-- Enable PostGIS (includes raster)
+CREATE EXTENSION postgis;
 

@@ -1,0 +1,1 @@
+alias postg='psql -h localhost -U postgres'

@@ -4,7 +4,7 @@
 # For SCHASDB, always use the following:
 #
 # Username: postgres 
-# Password: postgres
+# Password: postgres1234
 #
 # For more info, please see geospaces.org - postgres DB
 #

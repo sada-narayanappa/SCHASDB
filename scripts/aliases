@@ -1,1 +1,2 @@
-alias postg='psql -h localhost -U postgres'
+alias postg='psql -h localhost -U postgres -d SCHASDB'
+alias PSQL='psql -h localhost -U postgres -d SCHASDB'

@@ -1,3 +1,8 @@
+#----------------------------------------------------------------------------------
+# RUN as
+# psql -h localhost -U postgres  -d SCHASDB -f tables.sql
+#--------------------------------------------------------------------------------
+
 CREATE TABLE env
 (
     time TIMESTAMP NOT NULL,
@@ -42,5 +47,5 @@ CREATE UNIQUE INDEX unique_reported_userid ON health (reported_userid);
 CREATE UNIQUE INDEX unique_userid ON "user" (userid);
 
 -- Enable PostGIS (includes raster)
-CREATE EXTENSION postgis;
+-- CREATE EXTENSION postgis;
 

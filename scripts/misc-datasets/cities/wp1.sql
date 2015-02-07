@@ -1,8 +1,8 @@
-#************************************************************
-#
-# Create worldcities
-#
-#************************************************************
+--************************************************************
+--
+-- Create worldcities
+--
+--************************************************************
 drop table IF EXISTS worldcities;
 
 create table worldcities(
@@ -30,19 +30,19 @@ CREATE INDEX worldcities_the_geom_gist ON worldcities
 
 -- \copy worldcities(country,city,accentCity,region,population,latitude,longitude) FROM 'worldcitiespop.csv'  DELIMITERS ',' CSV HEADER;
 
-#************************************************************
-#
-# Copy the csv into the table
-#
-#************************************************************
+--************************************************************
+--
+-- Copy the csv into the table
+--
+--************************************************************
 
 \copy worldcities(country,city,accentCity,region,population,latitude,longitude) FROM 'worldcitiespop.csv'  DELIMITERS ',' QUOTE E'\f' CSV HEADER ENCODING 'LATIN1';
 
-#************************************************************
-#
-# Update the column
-#
-#************************************************************
+--************************************************************
+--
+-- Update the column
+--
+--************************************************************
 
 update worldcities SET the_geom = ST_GeomFromText('POINT(' || longitude || ' ' || latitude || ')',4326);
 alter table worldcities add column loc point;

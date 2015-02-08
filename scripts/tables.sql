@@ -1,6 +1,6 @@
 --
---
---
+-- RUN as
+-- psql -h localhost -U postgres  -d SCHASDB -f tables.sql
 --
 
 CREATE TABLE env

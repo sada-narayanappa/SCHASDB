@@ -1,3 +1,4 @@
+#!/bin/sh
 #------------------------------------------------------------------------
 # NOTES
 # =====
@@ -27,4 +28,11 @@ fi
 createdb $AUTH -T template_postgis $DBNAME
 $PSQL -lqt | grep $DBNAME;
 
+$PSQL  -d $DBNAME -c "CREATE EXTENSION hstore;"
 echo "$$DBNAME created"
+
+
+# NOTES
+#
+# * run db.sh fist to create the database tables
+# *

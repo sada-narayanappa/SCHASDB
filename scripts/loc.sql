@@ -2,16 +2,17 @@
 --
 -- You must RUN this
 -- psql -h 10.0.0.3 -U postgres  -d SCHASDB -f loc.sql
+-- psql -h localhost -U postgres  -d SCHASDB -f loc.sql
 --
 -- See: http://postgresguide.com/sexy/hstore.html for hstore usage
 
-#drop table loc;
+--drop table loc;
 
 CREATE TABLE IF NOT EXISTS loc
 (
 		id								serial				PRIMARY KEY,
     stored_at  				TIMESTAMP 		default current_timestamp,
-    measured_at 			TIMESTAMP 		default current_timestamp,
+      			TIMESTAMP 		default current_timestamp,
     api_key           VARCHAR(16)   NOT NULL,
     version           VARCHAR(16)   ,
     record_type       VARCHAR(8)    ,
@@ -44,9 +45,7 @@ CREATE TABLE IF NOT EXISTS loc
 
 );
 
-CREATE INDEX loc_the_geom_gist ON loc
-  USING gist
-  (the_geom );
+CREATE INDEX loc_the_geom_gist ON loc USING gist (the_geom );
 
 alter table loc add column location point;
 

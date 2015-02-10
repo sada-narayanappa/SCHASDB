@@ -1,5 +1,7 @@
 1
-select * from loc ORDER BY id DESC LIMIT 1000
+-- comment
+--
+SELECT * from loc ORDER BY id DESC LIMIT 1000
 
 #--------------------------------------------------------------------------
 2
@@ -7,12 +9,46 @@ INSERT INTO loc (
 	api_key,measured_at,version,record_type,session_num,mobile_id,user_id,
 	caller_ip,lat,lon,speed,bearing,alt,medication,weather_time,
 	temperature_min,temperature_max,humidity,no2,pressure,wind,
-	clouds_sky,notes,attr,the_geom,location
+	clouds_sky,notes,attr,the_geom
 )
 VALUES (
 	$api_key, $measured_at,$version,$record_type,$session_num,$mobile_id,$user_id,
 	$caller_ip,$lat,$lon,$speed,$bearing,$alt,$medication,$weather_time,$temperature_min,
 	$temperature_max,$humidity,$no2,$pressure,$wind,
-	$clouds_sky,$notes,$attr,$the_geom,$location
+	$clouds_sky,$notes,$attr,ST_GeomFromText('POINT(' || $lon || ' ' || $lat || ')',4326)
 )
 #--------------------------------------------------------------------------
+3
+SELECT
+	id,measured_at,mobile_id,
+	speed,bearing,alt,medication,weather_time,
+	temperature_min,temperature_max,humidity,
+	ST_X(the_geom) as lon, ST_Y(the_geom) as lat
+from loc
+ORDER BY id DESC LIMIT 1000
+
+#--------------------------------------------------------------------------
+4
+-- bounds format is as follows:
+-- lower left corner(lon, lat), top right corner  (lon, lat)
+--
+-- -91.97908270415822,44.859764956810096,-91.87720167693864,44.88865662175359
+--
+SELECT 	ST_X(the_geom) as lon, ST_Y(the_geom), city as lat
+FROM 	loc
+WHERE	the_geom && ST_MakeEnvelope("+ $bounds +")
+LIMIT 	1000
+#--------------------------------------------------------------------------
+5
+
+UPDATE loc SET
+	weather_time 	= $weather_time,
+	temperature_min	= $temperature_min,
+	temperature_max	= $temperature_max,
+	humidity		= $humidity,
+	pressure		= $pressure,
+	wind			= $wind
+WHERE
+	id = $id
+#--------------------------------------------------------------------------
+

@@ -5,7 +5,7 @@
 --
 -- See: http://postgresguide.com/sexy/hstore.html for hstore usage
 
-drop table loc;
+#drop table loc;
 
 CREATE TABLE IF NOT EXISTS loc
 (

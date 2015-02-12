@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS loc
     device_pressure   VARCHAR(16),
     device_humidity   VARCHAR(16),
     device_light      VARCHAR(16),
-    medication        VARCHAR(32), // Weather related items below
+    medication        VARCHAR(32),    --  Weather related items below
     weather_time			TIMESTAMP ,
 		temperature_min 	float,
 		temperature_max 	float,

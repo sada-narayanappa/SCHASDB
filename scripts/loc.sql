@@ -11,8 +11,8 @@
 CREATE TABLE IF NOT EXISTS loc
 (
 		id								serial				PRIMARY KEY,
-    stored_at  				TIMESTAMP 		default current_timestamp,
-    measured_at 			TIMESTAMP 		default current_timestamp,
+    stored_at  				TIMESTAMP 		default (now() at time zone 'utc'),
+    measured_at 			TIMESTAMP 		default (now() at time zone 'utc'),
     api_key           VARCHAR(16)   NOT NULL,
     version           VARCHAR(16)   ,
     record_type       VARCHAR(8)    ,

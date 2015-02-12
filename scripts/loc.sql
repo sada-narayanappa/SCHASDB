@@ -12,13 +12,13 @@ CREATE TABLE IF NOT EXISTS loc
 (
 		id								serial				PRIMARY KEY,
     stored_at  				TIMESTAMP 		default current_timestamp,
-      			TIMESTAMP 		default current_timestamp,
+    measured_at 			TIMESTAMP 		default current_timestamp,
     api_key           VARCHAR(16)   NOT NULL,
     version           VARCHAR(16)   ,
     record_type       VARCHAR(8)    ,
     session_num       VARCHAR(8)    ,
     mobile_id 				VARCHAR(32) 	,
-    user_id						INTEGER ,
+    user_id						VARCHAR(32)   ,
     caller_ip         VARCHAR (32)  ,
     lat 							float,
     lon 							float,
@@ -26,7 +26,11 @@ CREATE TABLE IF NOT EXISTS loc
     speed		 					float,
     bearing 					float,
     alt 	 						float,
-    medication        VARCHAR(32),
+    device_temp       VARCHAR(16),
+    device_pressure   VARCHAR(16),
+    device_humidity   VARCHAR(16),
+    device_light      VARCHAR(16),
+    medication        VARCHAR(32), // Weather related items below
     weather_time			TIMESTAMP ,
 		temperature_min 	float,
 		temperature_max 	float,
@@ -45,7 +49,9 @@ CREATE TABLE IF NOT EXISTS loc
 
 );
 
-CREATE INDEX loc_the_geom_gist ON loc USING gist (the_geom );
+CREATE INDEX loc_the_geom_gist ON loc
+  USING gist
+  (the_geom );
 
 alter table loc add column location point;
 

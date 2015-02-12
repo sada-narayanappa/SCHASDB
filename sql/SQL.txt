@@ -12,8 +12,8 @@ INSERT INTO loc (
 	clouds_sky,notes,attr,the_geom
 )
 VALUES (
-	$api_key, $measured_at,$version,$record_type,$session_num,$mobile_id,$user_id,
-	$caller_ip,$lat,$lon,$speed,$bearing,$alt,$medication,$weather_time,$temperature_min,
+	$api_key, to_timestamp($measured_at),$version,$record_type,$session_num,$mobile_id,$user_id,
+	$caller_ip,$lat,$lon,$speed,$bearing,$alt,$medication, to_timestamp($weather_time),$temperature_min,
 	$temperature_max,$humidity,$no2,$pressure,$wind,
 	$clouds_sky,$notes,$attr,ST_GeomFromText('POINT(' || $lon || ' ' || $lat || ')',4326)
 )
@@ -34,7 +34,7 @@ ORDER BY id DESC LIMIT 1000
 --
 -- -91.97908270415822,44.859764956810096,-91.87720167693864,44.88865662175359
 --
-SELECT 	ST_X(the_geom) as lon, ST_Y(the_geom), city as lat
+SELECT 	ST_X(the_geom) as lon, ST_Y(the_geom) as lat
 FROM 	loc
 WHERE	the_geom && ST_MakeEnvelope("+ $bounds +")
 LIMIT 	1000
@@ -49,6 +49,6 @@ UPDATE loc SET
 	pressure		= $pressure,
 	wind			= $wind
 WHERE
-	id = $id
+	id = $pid
 #--------------------------------------------------------------------------
 

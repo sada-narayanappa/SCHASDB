@@ -6,13 +6,14 @@
 --
 -- See: http://postgresguide.com/sexy/hstore.html for hstore usage
 
---drop table loc;
+-- drop table loc;
 
 CREATE TABLE IF NOT EXISTS loc
 (
 		id								serial				PRIMARY KEY,
     stored_at  				TIMESTAMP 		default (now() at time zone 'utc'),
     measured_at 			TIMESTAMP 		default (now() at time zone 'utc'),
+    is_valid          INTEGER       default 0,
     api_key           VARCHAR(16)   NOT NULL,
     version           VARCHAR(16)   ,
     record_type       VARCHAR(16)    ,

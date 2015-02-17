@@ -64,7 +64,8 @@ from loc
 WHERE
 	stored_at 	>= 	$stored_at		and
 	mobile_id  	= 	$mobile_id		and
-	session_num	>= 	$session_num
+	session_num	>= 	$session_num	and
+	accuracy    >=  $accuracy
 ORDER BY id DESC LIMIT 1000
 
 #--------------------------------------------------------------------------

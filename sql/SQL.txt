@@ -56,7 +56,7 @@ WHERE
 #--------------------------------------------------------------------------
 6
 SELECT
-    id,stored_at, stored_at  AT TIME ZONE 'GMT' as mst, measured_at,mobile_id,
+    id,stored_at, measured_at AT TIME ZONE 'GMT' as mst, measured_at,mobile_id,
     record_type, session_num,
     ST_X(the_geom) as lon, ST_Y(the_geom) as lat, accuracy, is_valid,
     speed,bearing,alt,medication,weather_time,

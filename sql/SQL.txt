@@ -64,6 +64,7 @@ from loc
 WHERE
 	is_valid	<= 	0				and
 	stored_at 	>= 	$stored_at		and
+	measured_at >= 	$measured_at	and
 	mobile_id  	= 	$mobile_id		and
 	session_num	>= 	$session_num	and
 	accuracy    >=  $accuracy

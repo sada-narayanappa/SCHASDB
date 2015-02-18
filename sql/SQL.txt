@@ -50,7 +50,7 @@ UPDATE loc SET
     temperature_max	= $temperature_max,
     humidity		= $humidity,
     pressure		= $pressure,
-    wind			= $wind
+    wind            = $wind
 WHERE
     id = $pid
 #--------------------------------------------------------------------------

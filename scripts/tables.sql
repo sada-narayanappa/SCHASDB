@@ -30,20 +30,21 @@ CREATE TABLE health
     values VARCHAR(512) NOT NULL,
     pk_user INT PRIMARY KEY NOT NULL
 );
-CREATE TABLE "user"
-(
-    userid INT NOT NULL,
-    fname VARCHAR(50) NOT NULL,
-    lname VARCHAR(50) NOT NULL,
-    address BIGINT NOT NULL,
-    cellphone VARCHAR(15) NOT NULL,
-    mobileid VARCHAR(15) NOT NULL,
-    homephone VARCHAR(15) NOT NULL,
-    passwd VARCHAR(128) NOT NULL,
-    pk_user INT PRIMARY KEY NOT NULL
-);
 CREATE UNIQUE INDEX "unique_reported_userId" ON env (reported_userid);
 CREATE UNIQUE INDEX unique_reported_userid ON health (reported_userid);
+
+CREATE TABLE "user"
+(
+    userid serial				PRIMARY KEY,,
+    fname       VARCHAR(50)     ,
+    lname       VARCHAR(50)     ,
+    cname       VARCHAR(50)     ,
+    address     VArCHAR(128)    ,
+    cellphone   VARCHAR(15) ,
+    mobileid    VARCHAR(32) ,
+    homephone   VARCHAR(15) ,
+    passwd      VARCHAR(128) ,
+);
 CREATE UNIQUE INDEX unique_userid ON "user" (userid);
 
 -- Enable PostGIS (includes raster)

@@ -84,10 +84,11 @@ update loc set is_valid = 1 where id=$pid
 
 SElECT distinct a.mobile_id, a.session_num
 FROM   loc a
-WHERE  a.session_num in (
-          SELECT    b.session_num
+WHERE   CAST(coalesce(a.session_num, '0') AS integer)
+IN (
+          SELECT    distinct CAST(coalesce(b.session_num, '0') AS integer) as sn
           FROM      loc b
           WHERE     a.mobile_id=b.mobile_id
-          ORDER BY  b.session_num desc
+          ORDER BY  sn desc
           LIMIT 5)
 ORDER BY a.mobile_id, a.session_num

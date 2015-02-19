@@ -82,13 +82,17 @@ update loc set is_valid = 1 where id=$pid
 9
 -- Get top 5 unique mobile_id and sessions
 
-SElECT distinct a.mobile_id, a.session_num
-FROM   loc a
-WHERE   CAST(coalesce(a.session_num, '0') AS integer)
-IN (
+SElECT
+        distinct a.mobile_id, CAST(coalesce(a.session_num, '0') AS integer) as session_num
+FROM
+        loc a
+WHERE
+        CAST(coalesce(a.session_num, '0') AS integer)
+    IN (
           SELECT    distinct CAST(coalesce(b.session_num, '0') AS integer) as sn
           FROM      loc b
           WHERE     a.mobile_id=b.mobile_id
-          ORDER BY  sn desc
+          ORDER BY  sn DESC
           LIMIT 5)
-ORDER BY a.mobile_id, a.session_num
+ORDER BY a.mobile_id, session_num DESC;
+

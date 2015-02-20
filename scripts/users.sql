@@ -17,5 +17,3 @@ CREATE TABLE users
     passwd          VARCHAR(128)    ,
     home_location   VARCHAR(128)
 );
-
-

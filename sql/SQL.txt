@@ -96,3 +96,8 @@ WHERE
           LIMIT 5)
 ORDER BY a.mobile_id, session_num DESC;
 
+#--------------------------------------------------------------------------
+10
+
+SELECT * from loc where weather_time IS null ORDER BY id DESC LIMIT 1000
+#--------------------------------------------------------------------------

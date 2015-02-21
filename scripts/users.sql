@@ -4,7 +4,7 @@
 --
 DROP TABLE users;
 
-CREATE TABLE users
+CREATE TABLE IF NOT EXISTS users
 (
     userid serial		PRIMARY KEY     ,
     fname           VARCHAR(32)     ,

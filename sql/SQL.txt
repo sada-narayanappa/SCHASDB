@@ -87,11 +87,12 @@ SElECT
 FROM
         loc a
 WHERE
-        CAST(coalesce(a.session_num, '0') AS integer)
+    CAST(coalesce(a.session_num, '0') AS integer)
     IN (
           SELECT    distinct CAST(coalesce(b.session_num, '0') AS integer) as sn
           FROM      loc b
-          WHERE     a.mobile_id=b.mobile_id
+          WHERE     a.mobile_id=b.mobile_id and
+                    b.is_valid = 0
           ORDER BY  sn DESC
           LIMIT 5)
 ORDER BY a.mobile_id, session_num DESC;

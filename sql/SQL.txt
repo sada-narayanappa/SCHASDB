@@ -94,7 +94,7 @@ WHERE
           WHERE     a.mobile_id=b.mobile_id and
                     b.is_valid = 0
           ORDER BY  sn DESC
-          LIMIT 5)
+          LIMIT 4)
 ORDER BY a.mobile_id, session_num DESC;
 
 #--------------------------------------------------------------------------

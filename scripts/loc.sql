@@ -25,6 +25,7 @@ CREATE TABLE IF NOT EXISTS loc
     lon 							float,
     accuracy          float,
     speed		 					float,
+    activity          VARCHAR (16)  ,  -- what is user doing, walking, running, driving
     bearing 					float,
     alt 	 						float,
     device_temp       VARCHAR(16),

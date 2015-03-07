@@ -13,7 +13,7 @@
 
 3. run test.sh - to test
 
-4. run tables.sql to create all the tables:
-   psql -h localhost -U postgres  -d SCHASDB -f tables.sql
+4. run users.sql to create all the userusers:
+   psql -h localhost -U postgres  -d SCHASDB -f users.sql
 
 

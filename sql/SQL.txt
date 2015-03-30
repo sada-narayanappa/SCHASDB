@@ -102,3 +102,10 @@ ORDER BY a.mobile_id, session_num DESC;
 
 SELECT * from loc where weather_time IS null ORDER BY id DESC LIMIT 1000
 #--------------------------------------------------------------------------
+11
+
+SELECT * from weather_stations 
+WHERE
+	state= $state
+ORDER BY state
+LIMIT 100

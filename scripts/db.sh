@@ -25,10 +25,12 @@ if $PSQL -lqt | grep $DBNAME; then
 	exit
 fi
 
-createdb $AUTH -T template_postgis $DBNAME
-$PSQL -lqt | grep $DBNAME;
+#createdb $AUTH -T template_postgis $DBNAME
+#$PSQL -lqt | grep $DBNAME;
 
 $PSQL  -d $DBNAME -c "CREATE EXTENSION hstore;"
+$PSQL  -d $DBNAME -c "CREATE EXTENSION postgis;"
+$PSQL  -d $DBNAME -c "CREATE EXTENSION pgrouting;"
 echo "$$DBNAME created"
 
 

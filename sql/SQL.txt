@@ -109,3 +109,21 @@ WHERE
 	state= $state
 ORDER BY state
 LIMIT 100
+
+#--------------------------------------------------------------------------
+12
+
+select source from pgr order by st_distance(geom_way, st_setsrid(st_makepoint($lon, $lat), 4326)) limit 1;
+
+#--------------------------------------------------------------------------
+13
+
+SELECT seq, id1 AS node, id2 AS edge, di.cost, ST_AsGeoJSON(geom_way)
+ FROM pgr_dijkstra(
+    'SELECT id, source, target, st_length(geom_way) as cost FROM pgr',
+    $s, $t, false, false
+  ) as di
+  JOIN pgr
+  ON di.id2 = pgr.id
+
+

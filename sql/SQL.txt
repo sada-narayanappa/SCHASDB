@@ -127,3 +127,9 @@ SELECT seq, id1 AS node, id2 AS edge, di.cost, ST_AsGeoJSON(geom_way)
   ON di.id2 = pgr.id
 
 
+#--------------------------------------------------------------------------
+14
+
+select * from users where cname=$cname and passwd=$passwd
+
+

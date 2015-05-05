@@ -113,7 +113,8 @@ LIMIT 100
 #--------------------------------------------------------------------------
 12
 
-select source from pgr order by st_distance(geom_way, st_setsrid(st_makepoint($lon, $lat), 4326)) limit 1;
+select source from pgr
+order by st_distance(ST_StartPoint(geom_way), st_setsrid(st_makepoint($lon, $lat), 4326)) limit 1;
 
 #--------------------------------------------------------------------------
 13

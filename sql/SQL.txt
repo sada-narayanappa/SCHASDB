@@ -181,15 +181,15 @@ select * from users where cname=$cname and passwd=$passwd
 15
 
 WITH loc1 as (
-    SELECT distinct mobile_id,  measured_at::DATE as dates
+    SELECT distinct mobile_id,  measured_at::DATE as groupby
     FROM  loc
 )
 SElECT
-  distinct a.mobile_id, a.dates
+  distinct a.mobile_id, a.groupby
 FROM
   loc1 a
 WHERE
-  a.dates
+  a.groupby
   IN (
     SELECT    distinct measured_at::DATE  as sn
     FROM      loc b
@@ -197,4 +197,4 @@ WHERE
               b.is_valid = 0
     ORDER BY  sn DESC
     LIMIT 4)
-ORDER BY a.mobile_id, session_num DESC;
+ORDER BY a.mobile_id, groupby DESC;

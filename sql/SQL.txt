@@ -98,6 +98,29 @@ WHERE
 ORDER BY a.mobile_id, session_num DESC;
 
 #--------------------------------------------------------------------------
+9a
+-- Same as 9 except but more efficient
+
+WITH loc1 as (
+    SELECT distinct mobile_id,  CAST(coalesce(a.session_num, '0') AS integer) as groupby
+    FROM  loc a
+)
+SElECT
+  distinct a.mobile_id, a.groupby
+FROM
+  loc1 a
+WHERE
+  a.groupby
+  IN (
+    SELECT    distinct CAST(coalesce(b.session_num, '0') AS integer)  as sn
+    FROM      loc b
+    WHERE     a.mobile_id=b.mobile_id and
+              b.is_valid = 0
+    ORDER BY  sn DESC
+    LIMIT 4)
+ORDER BY a.mobile_id, groupby DESC;
+
+#--------------------------------------------------------------------------
 10
 
 SELECT * from loc where weather_time IS null ORDER BY id DESC LIMIT 1000
@@ -134,3 +157,24 @@ SELECT seq, id1 AS node, id2 AS edge, di.cost, ST_AsGeoJSON(geom_way)
 select * from users where cname=$cname and passwd=$passwd
 
 
+#--------------------------------------------------------------------------
+15
+
+WITH loc1 as (
+    SELECT distinct mobile_id,  measured_at::DATE as dates
+    FROM  loc
+)
+SElECT
+  distinct a.mobile_id, a.dates
+FROM
+  loc1 a
+WHERE
+  a.dates
+  IN (
+    SELECT    distinct measured_at::DATE  as sn
+    FROM      loc b
+    WHERE     a.mobile_id=b.mobile_id and
+              b.is_valid = 0
+    ORDER BY  sn DESC
+    LIMIT 4)
+ORDER BY a.mobile_id, session_num DESC;

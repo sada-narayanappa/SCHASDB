@@ -198,3 +198,17 @@ WHERE
     ORDER BY  sn DESC
     LIMIT 4)
 ORDER BY a.mobile_id, groupby DESC;
+#--------------------------------------------------------------------------
+16
+
+UPDATE user SET
+    fname 	= $fname,
+    lname	= $lname,
+    address	= $address,
+    cellphone		= $cellphone,
+    mobileid		= $mobileid,
+    homephone            = $homephone,
+    home_location =$home_location
+WHERE
+    userid = $userSysId
+#--------------------------------------------------------------------------

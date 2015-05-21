@@ -201,7 +201,7 @@ ORDER BY a.mobile_id, groupby DESC;
 #--------------------------------------------------------------------------
 16
 
-UPDATE users SET
+UPDATE users   SET
     fname 	= $fname,
     lname	= $lname,
     address	= $address,

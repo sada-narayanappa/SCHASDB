@@ -212,3 +212,26 @@ UPDATE users   SET
 WHERE
     userid = $userSysId
 #--------------------------------------------------------------------------
+
+17
+select * from users where cname=$cname
+
+#--------------------------------------------------------------------------
+
+18
+select * from users where userid = $userSysId
+
+#--------------------------------------------------------------------------
+19
+
+UPDATE users   SET
+    password 	= $password
+WHERE
+    userid = $userSysId and password =$oldpassword
+
+#--------------------------------------------------------------------------
+20
+UPDATE users   SET
+    password 	= $password
+ where cname=$cname and passwd=$oldpasswd
+

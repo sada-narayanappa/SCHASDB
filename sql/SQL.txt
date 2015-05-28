@@ -235,3 +235,13 @@ UPDATE users   SET
     password 	= $password
  where cname=$cname and passwd=$oldpasswd
 
+#--------------------------------------------------------------------------
+21
+SELECT seq,id1 AS route, id2 AS node, id3 AS edge, di.cost, ST_AsGeoJSON(geom_way)
+  FROM pgr_ksp(
+    'SELECT id, source, target, st_length(geom_way) as cost FROM pgr',
+    $s, $t, $k, false
+  ) as di
+  JOIN pgr
+  ON di.id2 = pgr.id
+

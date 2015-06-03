@@ -234,4 +234,12 @@ WHERE
 UPDATE users   SET
     password 	= $password
  where cname=$cname and passwd=$oldpasswd
-
+#--------------------------------------------------------------------------
+20
+SELECT    distinct measured_at::DATE  as sn
+    FROM      loc b
+    WHERE     b.mobile_id=$mobile_id and
+              b.is_valid = 0
+    ORDER BY  sn DESC
+    LIMIT 4)
+ #--------------------------------------------------------------------------

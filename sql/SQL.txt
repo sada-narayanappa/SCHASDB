@@ -246,6 +246,7 @@ SELECT seq,id1 AS route, id2 AS node, id3 AS edge, ksp.cost, ST_AsGeoJSON(geom_w
   ON ksp.id3 = pgr.id
 #--------------------------------------------------------------------------
 22
-SELECT distinct mobile_id,  measured_at::DATE as groupby
+SELECT distinct mobile_id,measured_at::DATE as groupby
     FROM  loc where mobile_id=$mobile_id
- #--------------------------------------------------------------------------
+
+#--------------------------------------------------------------------------

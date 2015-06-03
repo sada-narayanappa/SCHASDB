@@ -248,6 +248,6 @@ SELECT seq,id1 AS route, id2 AS node, id3 AS edge, ksp.cost, ST_AsGeoJSON(geom_w
 22
  SELECT    distinct measured_at::DATE  as sn
     FROM      loc b
-    WHERE     a.mobile_id=b.mobile_id and
+    WHERE     b.mobile_id=$mobile_id and
               b.is_valid = 0
     ORDER BY  sn DESC

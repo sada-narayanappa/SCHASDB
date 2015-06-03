@@ -251,4 +251,3 @@ SELECT seq,id1 AS route, id2 AS node, id3 AS edge, ksp.cost, ST_AsGeoJSON(geom_w
     WHERE     a.mobile_id=b.mobile_id and
               b.is_valid = 0
     ORDER BY  sn DESC
-   

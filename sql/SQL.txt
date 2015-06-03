@@ -234,12 +234,14 @@ WHERE
 UPDATE users   SET
     password 	= $password
  where cname=$cname and passwd=$oldpasswd
+
 #--------------------------------------------------------------------------
-20
-SELECT    distinct measured_at::DATE  as sn
-    FROM      loc b
-    WHERE     b.mobile_id=$mobile_id and
-              b.is_valid = 0
-    ORDER BY  sn DESC
-    LIMIT 4)
- #--------------------------------------------------------------------------
+21
+SELECT seq,id1 AS route, id2 AS node, id3 AS edge, ksp.cost, ST_AsGeoJSON(geom_way)
+  FROM pgr_ksp(
+    'SELECT id, source, target, st_length(geom_way) as cost ,st_length(geom_way) as reverse_cost FROM pgr',
+    $s, $t, $k, true
+  ) as ksp
+  JOIN pgr
+  ON ksp.id3 = pgr.id
+

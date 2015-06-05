@@ -239,7 +239,7 @@ UPDATE users   SET
 21
 SELECT seq,id1 AS route, id2 AS node, id3 AS edge, ksp.cost, ST_AsGeoJSON(geom_way)
   FROM pgr_ksp(
-    'SELECT id, source, target, st_length(geometry(geom_way,4326)::geography) as cost ,st_length(geometry(geom_way,4326)::geography) as reverse_cost FROM pgr',
+    'SELECT id, source, target, st_length(geom_way) as cost ,st_length(geom_way) as reverse_cost FROM pgr',
     $s, $t, $k, true
   ) as ksp
   JOIN pgr

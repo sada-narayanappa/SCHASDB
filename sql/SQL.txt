@@ -264,6 +264,6 @@ INSERT INTO temproutes (
 	seq, route, node, edge, routecost, st_asgeojson, sourceNode, targetNode
 )
 VALUES(
-	$seq,$route,$node,$edge,$routecost , $st_asgeojson, $sourceNode, $targetNode
+	$seq, $route, $node, $edge, $rc, $st_asgeojson, $sourceNode, $targetNode
 )
-#--------------------------------------------------------------------------	
+

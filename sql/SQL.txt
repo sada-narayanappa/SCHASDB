@@ -261,9 +261,9 @@ SELECT distinct mobile_id,measured_at::DATE as groupby
 #--------------------------------------------------------------------------
 23
 INSERT INTO temproutes (
-	seq, route, node, edge, routecost, st_asgeojson, sourceNode, targetNode
+	seq, route, node, edge, routecost, st_asgeojson, sourcenode, targetnode
 )
 VALUES(
-	$seq, $route, $node, $edge, $rc, $st_asgeojson, $sourceNode, $targetNode
+	$seq, $route, $node, $edge, $rc, $st_asgeojson, $sourcenode, $targetnode
 )
 

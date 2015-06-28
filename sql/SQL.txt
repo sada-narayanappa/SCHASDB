@@ -259,3 +259,11 @@ SELECT distinct mobile_id,measured_at::DATE as groupby
     FROM  loc where mobile_id=$mobile_id LIMIT 20
 
 #--------------------------------------------------------------------------
+23
+INSERT INTO temproutes (
+	seq, route, node, edge, routecost, st_asgeojson, sourceNode, targetNode
+)
+VALUES(
+	$seq,$route,$node,$edge,$routecost , $st_asgeojson, $sourceNode, $targetNode
+)
+#--------------------------------------------------------------------------	

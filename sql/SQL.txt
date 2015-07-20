@@ -266,4 +266,21 @@ INSERT INTO temproutes (
 VALUES(
 	$seq, $route, $node, $edge, $rc, $st_asgeojson, $sourcenode, $targetnode
 )
+#--------------------------------------------------------------------------
+24
+WITH
+lines_in_polygons AS(
+	WITH	line AS (
+		SELECT ST_Union(ST_GeomFromGeoJson(st_asgeojson)::geography::geometry) as line_geom, route
+		FROM temproutes
+		WHERE sourcenode = $s AND targetnode = $t AND route < $k
+		GROUP BY route
+		)
+	SELECT ST_Intersection(line_geom, voronoi_geom) as line_and_poly_intersection, station_id, route
+	FROM line, weather_stations
+	WHERE is_interested = TRUE AND ST_Intersects(line_geom,voronoi_geom)
+)
+
+SELECT line_and_poly_intersection, ST_length(line_and_poly_intersection::geography)*.000621371 AS length_in_cell, station_id, route
+FROM lines_in_polygons
 

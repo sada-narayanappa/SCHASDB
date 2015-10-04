@@ -318,7 +318,7 @@ WITH loc1 as (
 users1 as (
 	SELECT viewable_mobileid
 	FROM users
-	WHERE cname = 'sada'
+	WHERE cname = $username
 )
 SElECT
   distinct a.mobile_id, a.groupby, v.fname, v.lname

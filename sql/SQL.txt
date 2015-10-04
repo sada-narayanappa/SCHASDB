@@ -309,3 +309,30 @@ WHERE
     ORDER BY  sn DESC
  )
 ORDER BY a.mobile_id, groupby DESC;
+#--------------------------------------------------------------------------
+26
+WITH loc1 as (
+    SELECT distinct mobile_id,  measured_at::DATE as groupby
+    FROM  loc
+),
+users1 as (
+	SELECT viewable_mobileid
+	FROM users
+	WHERE cname = 'sada'
+)
+SElECT
+  distinct a.mobile_id, a.groupby, v.fname, v.lname
+FROM
+  loc1 a, users1 u, users v
+WHERE
+  a.groupby
+  IN (
+    SELECT    distinct measured_at::DATE  as sn
+    FROM      loc b
+    WHERE     a.mobile_id=b.mobile_id and
+              b.is_valid = 0 and
+              a.mobile_id = v.mobileid and
+              strpos(u.viewable_mobileid,a.mobile_id) > 0
+    ORDER BY  sn DESC
+ )
+ORDER BY a.mobile_id, groupby DESC;

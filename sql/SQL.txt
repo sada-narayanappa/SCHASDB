@@ -283,4 +283,29 @@ lines_in_polygons AS(
 
 SELECT line_and_poly_intersection, ST_length(line_and_poly_intersection::geography)*.000621371 AS length_in_cell, station_id, route
 FROM lines_in_polygons
-
+#--------------------------------------------------------------------------
+25
+WITH loc1 as (
+    SELECT distinct mobile_id,  measured_at::DATE as groupby
+    FROM  loc
+),
+users1 as (
+	SELECT viewable_mobileid
+	FROM users
+	WHERE cname = $username
+)
+SElECT
+  distinct a.mobile_id, a.groupby
+FROM
+  loc1 a, users1 u
+WHERE
+  a.groupby
+  IN (
+    SELECT    distinct measured_at::DATE  as sn
+    FROM      loc b
+    WHERE     a.mobile_id=b.mobile_id and
+              b.is_valid = 0 and
+              strpos(u.viewable_mobileid,a.mobile_id) > 0
+    ORDER BY  sn DESC
+ )
+ORDER BY a.mobile_id, groupby DESC;

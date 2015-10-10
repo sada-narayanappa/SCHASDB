@@ -336,3 +336,7 @@ WHERE
     ORDER BY  sn DESC
  )
 ORDER BY a.mobile_id, groupby DESC;
+#--------------------------------------------------------------------------
+27
+INSERT INTO users (fname,lname,cname,address,cellphone,mobileid,homephone,passwd,home_location,viewable_mobileid)
+VALUES ($fname,$lname,$username,$address,$cellphone,$mobileid,$homephone,$password,$home_location,$mobileid)

@@ -340,3 +340,18 @@ ORDER BY a.mobile_id, groupby DESC;
 27
 INSERT INTO users (fname,lname,cname,address,cellphone,mobileid,homephone,passwd,home_location,viewable_mobileid)
 VALUES ($fname,$lname,$username,$address,$cellphone,$mobileid,$homephone,$password,$home_location,$mobileid)
+#--------------------------------------------------------------------------
+28
+WITH heart AS(
+SELECT mobile_id, MAX(stored_at) AS recentHeartbeat
+FROM loc AS lo
+WHERE lo.record_type = 'active'
+GROUP BY lo.mobile_id
+)
+SELECT l.mobile_id, cname,fname,lname,address,cellphone,homephone,home_location, MAX(stored_at) AS newestUpload, count(l.mobile_id) AS numEntries, heart.recentHeartbeat
+FROM loc AS l
+FULL OUTER JOIN users
+ON users.mobileid = l.mobile_id
+FULL OUTER JOIN heart
+ON heart.mobile_id = l.mobile_id
+GROUP BY l.mobile_id,cname,fname,lname,address,cellphone,homephone,home_location, heart.recentheartbeat

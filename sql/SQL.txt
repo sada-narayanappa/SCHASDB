@@ -368,3 +368,13 @@ FROM loc
 WHERE mobile_id = $mobile_id
 GROUP BY CAST(stored_at AS DATE)
 LIMIT 365
+#--------------------------------------------------------------------------
+31
+SELECT COUNT(cname) AS numUsers
+FROM users
+WHERE cname = $cname
+#--------------------------------------------------------------------------
+32
+SELECT COUNT(cname) AS numUsers
+FROM users
+WHERE cname = $cname and passwd = $passwd

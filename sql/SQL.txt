@@ -378,3 +378,8 @@ WHERE cname = $cname
 SELECT COUNT(cname) AS numUsers
 FROM users
 WHERE cname = $cname and passwd = $passwd
+#--------------------------------------------------------------------------
+33
+UPDATE users
+SET passwd = $password
+WHERE cname = $username

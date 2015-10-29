@@ -383,3 +383,17 @@ WHERE cname = $cname and passwd = $passwd
 UPDATE users
 SET passwd = $password
 WHERE cname = $username
+#--------------------------------------------------------------------------
+34
+
+UPDATE users   SET
+    fname 	= $fname,
+    lname	= $lname,
+    address	= $address,
+    cellphone		= $cellphone,
+    mobileid		= $mobileid,
+    homephone            = $homephone,
+    home_location =$home_location,
+    passwd      = $passwd
+WHERE
+    cname = $cname

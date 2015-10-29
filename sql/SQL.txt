@@ -348,13 +348,13 @@ FROM loc AS lo
 WHERE lo.record_type = 'active'
 GROUP BY lo.mobile_id
 )
-SELECT l.mobile_id, cname,fname,lname,address,cellphone,homephone,home_location, MAX(stored_at) AS newestUpload, count(l.mobile_id) AS numEntries, heart.recentHeartbeat
+SELECT l.mobile_id, cname,fname,lname,address,cellphone,homephone,home_location, MAX(stored_at) AS newestUpload, count(l.mobile_id) AS numEntries, heart.recentHeartbeat,passwd
 FROM loc AS l
-FULL OUTER JOIN users
+LEFT OUTER JOIN users
 ON users.mobileid = l.mobile_id
 FULL OUTER JOIN heart
 ON heart.mobile_id = l.mobile_id
-GROUP BY l.mobile_id,cname,fname,lname,address,cellphone,homephone,home_location, heart.recentheartbeat
+GROUP BY l.mobile_id,cname,fname,lname,address,cellphone,homephone,home_location, heart.recentheartbeat,passwd
 #--------------------------------------------------------------------------
 29
 SELECT CAST(stored_at AS DATE), COUNT(DISTINCT mobile_id) AS activeusers

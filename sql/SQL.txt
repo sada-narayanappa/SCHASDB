@@ -321,7 +321,7 @@ users1 as (
 	WHERE cname = $username
 )
 SElECT
-  distinct a.mobile_id, a.groupby, v.fname, v.lname
+  distinct a.mobile_id, a.groupby, v.fname, v.lname, v.cname
 FROM
   loc1 a, users1 u, users v
 WHERE

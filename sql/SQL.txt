@@ -369,13 +369,21 @@ SELECT COUNT(DISTINCT ID) AS heartbeats, CAST(stored_at AS DATE) AS storedate
 FROM loc AS lo
 WHERE lo.record_type = 'active' AND lo.mobile_id = $mobile_id
 GROUP BY CAST(stored_at AS DATE)
+),
+attack AS(
+SELECT COUNT(DISTINCT ID) AS attacks, CAST(stored_at AS DATE) AS storedate2
+FROM loc AS lo2
+WHERE lo2.record_type = 'SEVERE_ATTACK' OR lo2.record_type = 'MEDIUM_ATTACK' OR lo2.record_type = 'MILD_ATTACK' AND lo2.mobile_id = $mobile_id
+GROUP BY CAST(stored_at AS DATE)
 )
-SELECT CAST(stored_at AS DATE), COUNT(DISTINCT id) AS uploads,heartbeats
+SELECT CAST(stored_at AS DATE), COUNT(DISTINCT id) AS uploads,heartbeats, attacks
 FROM loc
 FULL OUTER JOIN heart
 ON heart.storedate = CAST(stored_at AS DATE)
+FULL OUTER JOIN attack
+ON attack.storedate2 = CAST(stored_at AS DATE)
 WHERE mobile_id = $mobile_id
-GROUP BY CAST(stored_at AS DATE),heartbeats
+GROUP BY CAST(stored_at AS DATE),heartbeats,attacks
 LIMIT 365
 #--------------------------------------------------------------------------
 31

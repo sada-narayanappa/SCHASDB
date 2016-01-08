@@ -184,19 +184,21 @@ WITH loc1 as (
     SELECT distinct mobile_id,  measured_at::DATE as groupby
     FROM  loc
 )
-SElECT
-  distinct a.mobile_id, a.groupby, v.fname, v.lname, v.cname
+SELECT
+  distinct a.mobile_id, a.groupby, users.fname, users.lname, users.cname
 FROM
-  loc1 a, users v
+  loc1 a
+LEFT OUTER JOIN users
+ON users.mobileid = a.mobile_id
 WHERE
   a.groupby
   IN (
     SELECT    distinct measured_at::DATE  as sn
     FROM      loc b
     WHERE     a.mobile_id=b.mobile_id and
-              b.is_valid = 0 and
-              a.mobile_id = v.mobileid
+              b.is_valid = 0              
     ORDER BY  sn DESC
+    LIMIT 4
  )
 ORDER BY a.mobile_id, groupby DESC;
 #--------------------------------------------------------------------------

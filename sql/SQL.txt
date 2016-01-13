@@ -411,9 +411,9 @@ UPDATE users   SET
     lname	= $lname,
     address	= $address,
     cellphone		= $cellphone,
-    mobileid		= $mobileid,
+    cname = $cname,
     homephone            = $homephone,
     home_location =$home_location,
     passwd      = $passwd
 WHERE
-    cname = $cname
+    mobileid = $mobileid

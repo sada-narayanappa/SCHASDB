@@ -422,3 +422,22 @@ UPDATE users   SET
     passwd      = $passwd
 WHERE
     mobileid = $mobileid
+#--------------------------------------------------------------------------
+35
+WITH activeusers AS(
+	SELECT 
+		COUNT(DISTINCT mobile_id) AS numactiveusers
+	FROM 
+		loc 
+	WHERE  
+		extract(day from age(current_date,CAST(stored_at AS DATE))) < 29 AND 
+		extract(year from age(current_date,CAST(stored_at AS DATE))) = 0 AND 
+		extract(month from age(current_date,CAST(stored_at AS DATE))) =0
+)
+SELECT
+	COUNT(DISTINCT mobile_id) AS numusers,
+	numactiveusers
+FROM 
+	loc,
+	activeusers
+GROUP BY activeusers.numactiveusers

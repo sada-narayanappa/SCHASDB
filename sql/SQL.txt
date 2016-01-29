@@ -441,3 +441,37 @@ FROM
 	loc,
 	activeusers
 GROUP BY activeusers.numactiveusers
+#--------------------------------------------------------------------------
+36
+WITH measuredheart AS(
+	SELECT 
+		COUNT(DISTINCT ID) AS measuredheartbeats, CAST(measured_at AS DATE) AS measuredate 
+	FROM 
+		loc AS lo 
+	WHERE 
+		lo.record_type = 'active' AND lo.mobile_id = $mobile_id 
+	GROUP BY CAST(measured_at AS DATE)
+), 
+measuredattack AS(
+	SELECT 
+		COUNT(DISTINCT ID) AS measuredattacks, CAST(measured_at AS DATE) AS measuredate2 
+	FROM 
+		loc AS lo2 
+	WHERE 
+		(lo2.record_type = 'SEVERE_ATTACK' OR lo2.record_type = 'MEDIUM_ATTACK' OR lo2.record_type = 'MILD_ATTACK') AND lo2.mobile_id = $mobile_id 
+	GROUP BY 
+		CAST(measured_at AS DATE)
+) 
+SELECT 
+	CAST(measured_at AS DATE), COUNT(DISTINCT id) AS uploads,measuredheartbeats, measuredattacks 
+FROM 
+	loc 
+FULL OUTER JOIN measuredheart 
+ON measuredheart.measuredate = CAST(measured_at AS DATE) 
+FULL OUTER JOIN measuredattack 
+ON measuredattack.measuredate2 = CAST(measured_at AS DATE) 
+WHERE 
+	mobile_id = $mobile_id 
+GROUP BY 
+	CAST(measured_at AS DATE),measuredheartbeats,measuredattacks 
+LIMIT 365

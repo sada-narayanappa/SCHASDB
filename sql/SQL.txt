@@ -463,7 +463,7 @@ measuredattack AS(
 		CAST(measured_at AS DATE)
 ) 
 SELECT 
-	CAST(measured_at AS DATE), COUNT(DISTINCT id) AS uploads,measuredheartbeats, measuredattacks 
+	CAST(measured_at AS DATE) AS measureddate, COUNT(DISTINCT id) AS measureduploads,measuredheartbeats, measuredattacks 
 FROM 
 	loc 
 FULL OUTER JOIN measuredheart 

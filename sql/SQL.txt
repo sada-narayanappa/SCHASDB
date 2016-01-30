@@ -433,14 +433,27 @@ WITH activeusers AS(
 		extract(day from age(current_date,CAST(stored_at AS DATE))) < 29 AND 
 		extract(year from age(current_date,CAST(stored_at AS DATE))) = 0 AND 
 		extract(month from age(current_date,CAST(stored_at AS DATE))) =0
+),
+previousactiveusers AS(
+SELECT 
+		COUNT(DISTINCT mobile_id) AS previousnumactiveusers
+	FROM 
+		loc 
+	WHERE  
+		extract(day from age(current_date - integer '29',CAST(stored_at AS DATE))) < 29 AND 
+		extract(day from age(current_date - integer '29',CAST(stored_at AS DATE))) > 0 AND 
+		extract(year from age(current_date - integer '29',CAST(stored_at AS DATE))) = 0 AND 
+		extract(month from age(current_date - integer '29',CAST(stored_at AS DATE))) =0
 )
 SELECT
 	COUNT(DISTINCT mobile_id) AS numusers,
-	numactiveusers
+	numactiveusers,
+	previousnumactiveusers
 FROM 
 	loc,
-	activeusers
-GROUP BY activeusers.numactiveusers
+	activeusers,
+	previousactiveusers
+GROUP BY activeusers.numactiveusers, previousactiveusers.previousnumactiveusers
 #--------------------------------------------------------------------------
 36
 WITH measuredheart AS(

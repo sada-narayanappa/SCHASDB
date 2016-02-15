@@ -207,8 +207,7 @@ WHERE
 		b.is_valid = 0 
 		ORDER BY  sn DESC 
 		LIMIT 4
-	) AND
-	a.record_type <> 'active'
+	)
 ORDER BY  recentUpload::DATE DESC, a.mobile_id, groupby DESC;
 #--------------------------------------------------------------------------
 16

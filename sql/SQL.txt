@@ -182,9 +182,10 @@ select * from users where cname=$cname and passwd=$passwd
 WITH loc1 as (
 	SELECT distinct mobile_id,  measured_at::DATE as groupby 
 	FROM  loc
+	WHERE record_type <> 'active'
 ), 
 maxDate AS (
-	SELECT mobile_id, MAX(stored_at::DATE) AS recentUpload 
+	SELECT mobile_id, MAX(measured_at::DATE) AS recentUpload 
 	FROM loc  
 	WHERE record_type <> 'active'
 	GROUP BY mobile_id
@@ -206,7 +207,8 @@ WHERE
 		b.is_valid = 0 
 		ORDER BY  sn DESC 
 		LIMIT 4
-	) 
+	) AND
+	a.record_type <> 'active'
 ORDER BY  recentUpload::DATE DESC, a.mobile_id, groupby DESC;
 #--------------------------------------------------------------------------
 16

@@ -185,7 +185,9 @@ WITH loc1 as (
 ), 
 maxDate AS (
 	SELECT mobile_id, MAX(stored_at::DATE) AS recentUpload 
-	FROM loc  GROUP BY mobile_id
+	FROM loc  
+	WHERE record_type <> 'active'
+	GROUP BY mobile_id
 ) 
 SELECT 
 	distinct a.mobile_id, a.groupby, users.fname, users.lname, users.cname, recentUpload::DATE 

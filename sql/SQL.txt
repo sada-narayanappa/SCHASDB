@@ -368,11 +368,26 @@ ON heart.mobile_id = l.mobile_id
 GROUP BY l.mobile_id,cname,fname,lname,address,cellphone,homephone,home_location, heart.recentheartbeat,passwd
 #--------------------------------------------------------------------------
 29
-SELECT CAST(stored_at AS DATE), COUNT(DISTINCT mobile_id) AS activeusers
-FROM loc
-GROUP BY CAST(stored_at AS DATE)
-ORDER BY CAST(stored_at AS DATE) ASC
-LIMIT 365
+WITH activedates AS (
+	SELECT 
+		day_id 
+	FROM 
+		calendar 
+	WHERE 
+		day_id <= current_date AND
+		day_id >= (SELECT MIN(CAST(stored_at AS DATE)) FROM loc)
+) 
+SELECT 
+	day_id, 
+	COUNT(DISTINCT mobile_id) AS activeusers
+ FROM 
+	loc 
+FULL OUTER JOIN activedates 
+ON CAST(stored_at AS DATE) = activedates.day_id 
+GROUP BY 
+	day_id,
+	CAST(stored_at AS DATE) 
+ORDER BY day_id ASC
 #--------------------------------------------------------------------------
 30
 WITH heart AS(

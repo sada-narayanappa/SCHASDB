@@ -180,18 +180,31 @@ select * from users where cname=$cname and passwd=$passwd
 #--------------------------------------------------------------------------
 15
 WITH loc1 as (
-	SELECT distinct mobile_id,  measured_at::DATE as groupby 
-	FROM  loc
-	WHERE record_type <> 'active'
+	SELECT 
+		distinct mobile_id,  
+		measured_at::DATE as groupby 
+	FROM  
+		loc 
+	WHERE 
+		(record_type <> 'active' OR record_type IS NULL)
 ), 
 maxDate AS (
-	SELECT mobile_id, MAX(measured_at::DATE) AS recentUpload 
-	FROM loc  
-	WHERE record_type <> 'active'
+	SELECT 
+		mobile_id, 
+		MAX(measured_at::DATE) AS recentUpload 
+	FROM 
+		loc 
+	WHERE 
+		(record_type <> 'active' OR record_type IS NULL) 
 	GROUP BY mobile_id
 ) 
 SELECT 
-	distinct a.mobile_id, a.groupby, users.fname, users.lname, users.cname, recentUpload::DATE 
+	distinct a.mobile_id, 
+	a.groupby, 
+	users.fname, 
+	users.lname, 
+	users.cname, 
+	recentUpload::DATE 
 FROM 
 	loc1 a 
 LEFT OUTER JOIN maxDate m 
@@ -204,11 +217,14 @@ WHERE
 		SELECT    distinct measured_at::DATE  as sn 
 		FROM      loc b 
 		WHERE     a.mobile_id=b.mobile_id and 
-		b.is_valid = 0 
+		b.is_valid = 0 and 
+		(b.record_type <> 'active' OR b.record_type IS NULL) 
 		ORDER BY  sn DESC 
 		LIMIT 4
-	)
-ORDER BY  recentUpload::DATE DESC, a.mobile_id, groupby DESC;
+	) 
+ORDER BY  
+	recentUpload::DATE DESC, 
+	a.mobile_id, groupby DESC
 #--------------------------------------------------------------------------
 16
 

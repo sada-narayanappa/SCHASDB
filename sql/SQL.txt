@@ -63,7 +63,7 @@ SELECT
     temperature_min,temperature_max,humidity
 from loc
 WHERE
-    is_valid	<=  0               and
+    is_valid	<=  1               and
     stored_at 	>=  $stored_at      and
     measured_at >=  $measured_at    and
     mobile_id  	=   $mobile_id      and
@@ -83,7 +83,7 @@ SELECT
     temperature_min,temperature_max,humidity
 from loc
 WHERE
-    is_valid	<=  0               and
+    is_valid	<=  1               and
     stored_at 	>=  $stored_at      and
     measured_at::DATE =  $measured_at::DATE    and
     mobile_id  	=   $mobile_id      and
@@ -112,7 +112,7 @@ WHERE
           SELECT    distinct CAST(coalesce(b.session_num, '0') AS integer) as sn
           FROM      loc b
           WHERE     a.mobile_id=b.mobile_id and
-                    b.is_valid = 0
+                    b.is_valid = 1
           ORDER BY  sn DESC
           LIMIT 4)
 ORDER BY a.mobile_id, session_num DESC;
@@ -135,7 +135,7 @@ WHERE
     SELECT    distinct CAST(coalesce(b.session_num, '0') AS integer)  as sn
     FROM      loc b
     WHERE     a.mobile_id=b.mobile_id and
-              b.is_valid = 0
+              b.is_valid = 1
     ORDER BY  sn DESC
     LIMIT 4)
 ORDER BY a.mobile_id, groupby DESC;
@@ -217,7 +217,7 @@ WHERE
 		SELECT    distinct measured_at::DATE  as sn 
 		FROM      loc b 
 		WHERE     a.mobile_id=b.mobile_id and 
-		b.is_valid = 0 and 
+		b.is_valid = 1 and 
 		(b.record_type <> 'active' OR b.record_type IS NULL) 
 		ORDER BY  sn DESC 
 		LIMIT 4
@@ -331,7 +331,7 @@ WHERE
     SELECT    distinct measured_at::DATE  as sn
     FROM      loc b
     WHERE     a.mobile_id=b.mobile_id and
-              b.is_valid = 0 and
+              b.is_valid = 1 and
               strpos(u.viewable_mobileid,a.mobile_id) > 0
     ORDER BY  sn DESC
  )
@@ -357,7 +357,7 @@ WHERE
     SELECT    distinct measured_at::DATE  as sn
     FROM      loc b
     WHERE     a.mobile_id=b.mobile_id and
-              b.is_valid = 0 and
+              b.is_valid = 1 and
               a.mobile_id = v.mobileid and
               strpos(u.viewable_mobileid,a.mobile_id) > 0
     ORDER BY  sn DESC

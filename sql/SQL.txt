@@ -97,7 +97,7 @@ ORDER BY id DESC LIMIT 1000
 select  distinct mobile_id, user_id,session_num    from loc;
 #--------------------------------------------------------------------------
 8
-update loc set is_valid = 1 where id=$pid
+update loc set is_valid = 0 where id=$pid
 #--------------------------------------------------------------------------
 9
 -- Get top 5 unique mobile_id and sessions

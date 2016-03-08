@@ -522,3 +522,23 @@ WHERE
 GROUP BY 
 	CAST(measured_at AS DATE),measuredheartbeats,measuredattacks 
 LIMIT 365
+#--------------------------------------------------------------------------
+37
+WITH deviceVersion AS (
+	SELECT 
+		DISTINCT mobile_id, 
+		MAX(id), 
+		version 
+	FROM 
+		loc 
+	GROUP BY 
+		mobile_id, 
+		version
+)
+SELECT 
+	version, 
+	COUNT(*) AS numberOfDevices
+FROM 
+	deviceVersion 
+GROUP BY 
+	version

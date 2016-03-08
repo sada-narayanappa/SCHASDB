@@ -531,6 +531,8 @@ WITH deviceVersion AS (
 		version 
 	FROM 
 		loc 
+	WHERE
+		record_type = 'active'
 	GROUP BY 
 		mobile_id, 
 		version

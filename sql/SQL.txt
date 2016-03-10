@@ -97,7 +97,7 @@ ORDER BY id DESC LIMIT 1000
 select  distinct mobile_id, user_id,session_num    from loc;
 #--------------------------------------------------------------------------
 8
-update loc set is_valid = 1 where id=$pid
+update loc set is_valid = 0 where id=$pid
 #--------------------------------------------------------------------------
 9
 -- Get top 5 unique mobile_id and sessions
@@ -522,3 +522,25 @@ WHERE
 GROUP BY 
 	CAST(measured_at AS DATE),measuredheartbeats,measuredattacks 
 LIMIT 365
+#--------------------------------------------------------------------------
+37
+WITH deviceVersion AS (
+	SELECT 
+		DISTINCT mobile_id, 
+		MAX(id), 
+		version 
+	FROM 
+		loc 
+	WHERE
+		record_type = 'active'
+	GROUP BY 
+		mobile_id, 
+		version
+)
+SELECT 
+	version, 
+	COUNT(*) AS numberOfDevices
+FROM 
+	deviceVersion 
+GROUP BY 
+	version

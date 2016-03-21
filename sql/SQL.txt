@@ -544,3 +544,15 @@ FROM
 	deviceVersion 
 GROUP BY 
 	version
+#--------------------------------------------------------------------------
+38
+SELECT 
+	version AS versiontype,
+	SUM(battery_level) AS totalbattery, 
+	COUNT(id) AS numentries 
+FROM 
+	loc
+WHERE 
+	record_type = 'active' 
+GROUP BY 
+	version

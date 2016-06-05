@@ -405,13 +405,18 @@ INSERT INTO users (fname,lname,cname,address,cellphone,mobileid,homephone,passwd
 VALUES ($fname,$lname,$username,$address,$cellphone,$mobileid,$homephone,$password,$home_location,$mobileid)
 #--------------------------------------------------------------------------
 28
+--Used on the SCHAS data page to populate the user table
 WITH heart AS(
-SELECT mobile_id, MAX(stored_at) AS recentHeartbeat
+SELECT mobile_id, stored_at AS recentHeartbeat, version AS deviceversion
 FROM loc AS lo
-WHERE lo.record_type = 'active'
-GROUP BY lo.mobile_id
+INNER JOIN (
+	SELECT mobile_id, MAX(stored_at) 
+	FROM loc 
+	WHERE record_type = 'active'
+	GROUP BY mobile_id
+) b ON lo.mobile_id = b.mobile_id, lo.stored_at = b.stored_at
 )
-SELECT l.mobile_id, cname,fname,lname,address,cellphone,homephone,home_location, MAX(stored_at) AS newestUpload, count(l.mobile_id) AS numEntries, heart.recentHeartbeat,passwd
+SELECT l.mobile_id, cname,fname,lname,address,cellphone,homephone,home_location, MAX(stored_at) AS newestUpload, count(l.mobile_id) AS numEntries, heart.recentHeartbeat,passwd, heart.deviceversion
 FROM loc AS l
 LEFT OUTER JOIN users
 ON users.mobileid = l.mobile_id

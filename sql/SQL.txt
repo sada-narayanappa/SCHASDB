@@ -671,7 +671,7 @@ WHERE
 41
 --returns peakflow data for a given mobile_id
 SELECT 
-	measured_at, 
+	CAST(measured_at AS DATE) AS measuredate, 
 	pef,
 	fev
 FROM 

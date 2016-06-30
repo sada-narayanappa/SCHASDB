@@ -667,3 +667,17 @@ WHERE
 (SELECT loc2.rn, loc2.mobile_id FROM rows loc2 WHERE loc2.is_valid != 1) UNION 
 (SELECT loc2.rn-1, loc2.mobile_id FROM rows loc2 WHERE loc2.is_valid != 1) UNION 
 (SELECT loc2.rn+1, loc2.mobile_id FROM rows loc2 WHERE loc2.is_valid != 1))
+#--------------------------------------------------------------------------
+41
+--returns peakflow data for a given mobile_id
+SELECT 
+	measured_at, 
+	pef,
+	fev
+FROM 
+	loc 
+WHERE 
+	record_type = 'peakflow' AND 
+	mobile_id = $mobile_id 
+ORDER BY 
+	measured_at

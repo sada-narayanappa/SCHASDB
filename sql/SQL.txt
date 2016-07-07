@@ -375,30 +375,57 @@ ORDER BY a.mobile_id, groupby DESC;
 #--------------------------------------------------------------------------
 26
 WITH loc1 as (
-    SELECT distinct mobile_id,  measured_at::DATE as groupby
-    FROM  loc
+	SELECT 
+		distinct mobile_id,  
+		measured_at::DATE as groupby 
+	FROM  
+		loc 
+	WHERE 
+		(record_type <> 'active' OR record_type IS NULL)
+), 
+maxDate AS (
+	SELECT 
+		mobile_id, 
+		MAX(measured_at::DATE) AS recentUpload 
+	FROM 
+		loc 
+	WHERE 
+		(record_type <> 'active' OR record_type IS NULL) 
+	GROUP BY mobile_id
 ),
 users1 as (
 	SELECT viewable_mobileid
 	FROM users
 	WHERE cname = $username
 )
-SElECT
-  distinct a.mobile_id, a.groupby, v.fname, v.lname, v.cname
-FROM
-  loc1 a, users1 u, users v
-WHERE
-  a.groupby
-  IN (
-    SELECT    distinct measured_at::DATE  as sn
-    FROM      loc b
-    WHERE     a.mobile_id=b.mobile_id and
-              b.is_valid = 1 and
-              a.mobile_id = v.mobileid and
-              strpos(u.viewable_mobileid,a.mobile_id) > 0
-    ORDER BY  sn DESC
- )
-ORDER BY a.mobile_id, groupby DESC;
+SELECT 
+	distinct a.mobile_id, 
+	a.groupby, 
+	users.fname, 
+	users.lname, 
+	users.cname, 
+	recentUpload::DATE 
+FROM 
+	loc1 a 
+LEFT OUTER JOIN maxDate m 
+ON m.mobile_id = a.mobile_id 
+FULL OUTER JOIN users 
+ON users.mobileid = a.mobile_id
+WHERE 
+	a.groupby 
+	IN (
+		SELECT    distinct measured_at::DATE  as sn 
+		FROM      loc b,
+			  users1
+		WHERE     a.mobile_id=b.mobile_id and 
+		strpos(users1.viewable_mobileid,a.mobile_id) > 0 AND		
+		b.is_valid = 1 and 
+		(b.record_type <> 'active' OR b.record_type IS NULL) 
+		ORDER BY  sn DESC 		
+	) 
+ORDER BY  
+	recentUpload::DATE DESC, 
+	a.mobile_id, groupby DESC
 #--------------------------------------------------------------------------
 27
 INSERT INTO users (fname,lname,cname,address,cellphone,mobileid,homephone,passwd,home_location,viewable_mobileid)

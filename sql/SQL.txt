@@ -710,3 +710,4 @@ ORDER BY
 	measured_at
 #--------------------------------------------------------------------------
 42
+update loc set markedvalidity = 1 where id=$pid

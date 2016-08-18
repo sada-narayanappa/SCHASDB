@@ -714,3 +714,6 @@ update loc set markedvalidity = 1 where id=$pid
 #--------------------------------------------------------------------------
 43
 update loc set markedvalidity = 2 where id=$pid
+#--------------------------------------------------------------------------
+44
+update loc set is_valid = 1 where id=$pid

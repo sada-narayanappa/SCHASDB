@@ -515,15 +515,23 @@ SELECT COUNT(DISTINCT ID) AS attacks, CAST(stored_at AS DATE) AS storedate2
 FROM loc AS lo2
 WHERE (lo2.record_type = 'SEVERE_ATTACK' OR lo2.record_type = 'MEDIUM_ATTACK' OR lo2.record_type = 'MILD_ATTACK') AND lo2.mobile_id = $mobile_id
 GROUP BY CAST(stored_at AS DATE)
+),
+medicine AS(
+SELECT COUNT(DISTINCT ID) AS medicines, CAST(stored_at AS DATE) AS storedate3
+FROM loc AS lo3
+WHERE (lo3.record_type = 'INHALER') AND lo3.mobile_id = $mobile_id
+GROUP BY CAST(stored_at AS DATE)
 )
-SELECT CAST(stored_at AS DATE), COUNT(DISTINCT id) AS uploads,heartbeats, attacks
+SELECT CAST(stored_at AS DATE), COUNT(DISTINCT id) AS uploads,heartbeats, attacks, medicines
 FROM loc
 FULL OUTER JOIN heart
 ON heart.storedate = CAST(stored_at AS DATE)
 FULL OUTER JOIN attack
 ON attack.storedate2 = CAST(stored_at AS DATE)
+FULL OUTER JOIN medicine
+ON medicine.storedate3 = CAST(stored_at AS DATE)
 WHERE mobile_id = $mobile_id
-GROUP BY CAST(stored_at AS DATE),heartbeats,attacks
+GROUP BY CAST(stored_at AS DATE),heartbeats,attacks, medicines
 LIMIT 365
 #--------------------------------------------------------------------------
 31
@@ -606,19 +614,31 @@ measuredattack AS(
 		(lo2.record_type = 'SEVERE_ATTACK' OR lo2.record_type = 'MEDIUM_ATTACK' OR lo2.record_type = 'MILD_ATTACK') AND lo2.mobile_id = $mobile_id 
 	GROUP BY 
 		CAST(measured_at AS DATE)
-) 
+),
+measuredmedication AS(
+	SELECT 
+		COUNT(DISTINCT ID) AS measuredmedications, CAST(measured_at AS DATE) AS measuredate3 
+	FROM 
+		loc AS lo3 
+	WHERE 
+		(lo3.record_type = 'INHALER') AND lo3.mobile_id = $mobile_id 
+	GROUP BY 
+		CAST(measured_at AS DATE)
+)
 SELECT 
-	CAST(measured_at AS DATE) AS measureddate, COUNT(DISTINCT id) AS measureduploads,measuredheartbeats, measuredattacks 
+	CAST(measured_at AS DATE) AS measureddate, COUNT(DISTINCT id) AS measureduploads,measuredheartbeats, measuredattacks, measuredmedications
 FROM 
 	loc 
 FULL OUTER JOIN measuredheart 
 ON measuredheart.measuredate = CAST(measured_at AS DATE) 
 FULL OUTER JOIN measuredattack 
 ON measuredattack.measuredate2 = CAST(measured_at AS DATE) 
+FULL OUTER JOIN measuredattack 
+ON measuredmedication.measuredate3 = CAST(measured_at AS DATE) 
 WHERE 
 	mobile_id = $mobile_id 
 GROUP BY 
-	CAST(measured_at AS DATE),measuredheartbeats,measuredattacks 
+	CAST(measured_at AS DATE),measuredheartbeats,measuredattacks, measuredmedications 
 LIMIT 365
 #--------------------------------------------------------------------------
 37

@@ -633,7 +633,7 @@ FULL OUTER JOIN measuredheart
 ON measuredheart.measuredate = CAST(measured_at AS DATE) 
 FULL OUTER JOIN measuredattack 
 ON measuredattack.measuredate2 = CAST(measured_at AS DATE) 
-FULL OUTER JOIN measuredattack 
+FULL OUTER JOIN measuredmedication 
 ON measuredmedication.measuredate3 = CAST(measured_at AS DATE) 
 WHERE 
 	mobile_id = $mobile_id 

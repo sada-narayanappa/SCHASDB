@@ -19,6 +19,7 @@ VALUES (
     $clouds_sky,$notes,$attr,
     ST_GeomFromText('POINT(' || $lon || ' ' || $lat || ')',4326),$battery_level,$pef, $fev
 )
+ON CONFLICT ON CONSTRAINT uniquememorec DO NOTHING;
 #--------------------------------------------------------------------------
 3
 SELECT

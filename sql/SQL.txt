@@ -737,3 +737,16 @@ update loc set markedvalidity = 2 where id=$pid
 #--------------------------------------------------------------------------
 44
 update loc set is_valid = 1 where id=$pid
+#--------------------------------------------------------------------------
+45
+--Returns the number of times an inhaler was used for a given mobile_id
+SELECT 
+	measured_at::date, 
+	COUNT(*) 
+FROM 
+	loc 
+WHERE 
+	mobile_id = $mobile_id  AND 
+	record_type ='INHALER' 
+GROUP BY 
+	measured_at::date

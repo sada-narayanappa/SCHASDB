@@ -69,7 +69,8 @@ WHERE
     mobile_id  	=   $mobile_id      and
     session_num = 	$session_num    and
     id          >=  $id             and
-    accuracy    >=  $accuracy
+    accuracy    >=  $accuracy       and
+    (lat != 0 OR lon != 0)
 ORDER BY id DESC LIMIT 1000
 
 #--------------------------------------------------------------------------
@@ -89,7 +90,8 @@ WHERE
     mobile_id  	=   $mobile_id      and
     session_num = 	$session_num    and
     id          >=  $id             and
-    accuracy    >=  $accuracy
+    accuracy    >=  $accuracy       and
+    (lat != 0 OR lon != 0)
 ORDER BY id DESC LIMIT 1000
 
 #--------------------------------------------------------------------------
@@ -108,7 +110,8 @@ WHERE
     mobile_id  	=   $mobile_id      and
     session_num = 	$session_num    and
     id          >=  $id             and
-    accuracy    >=  $accuracy
+    accuracy    >=  $accuracy       and
+    (lat != 0 OR lon != 0)
 ORDER BY id DESC LIMIT 1000
 #--------------------------------------------------------------------------
 6c
@@ -126,7 +129,8 @@ WHERE
     mobile_id  	=   $mobile_id      and
     session_num = 	$session_num    and
     id          >=  $id             and
-    accuracy    >=  $accuracy
+    accuracy    >=  $accuracy       and
+    (lat != 0 OR lon != 0)
 ORDER BY id DESC LIMIT 1000
 #--------------------------------------------------------------------------
 7

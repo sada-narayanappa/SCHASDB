@@ -226,7 +226,8 @@ WITH loc1 as (
 	FROM  
 		loc 
 	WHERE 
-		(record_type <> 'active' OR record_type IS NULL)
+		(record_type <> 'active' OR record_type IS NULL) AND
+		(lat != 0 or lon != 0)
 ), 
 maxDate AS (
 	SELECT 
@@ -235,7 +236,8 @@ maxDate AS (
 	FROM 
 		loc 
 	WHERE 
-		(record_type <> 'active' OR record_type IS NULL) 
+		(record_type <> 'active' OR record_type IS NULL) AND
+		(lat != 0 or lon != 0)
 	GROUP BY mobile_id
 ) 
 SELECT 
@@ -258,7 +260,8 @@ WHERE
 		FROM      loc b 
 		WHERE     a.mobile_id=b.mobile_id and 
 		b.is_valid = 1 and 
-		(b.record_type <> 'active' OR b.record_type IS NULL) 
+		(b.record_type <> 'active' OR b.record_type IS NULL) AND
+		(b.lat != 0 or b.lon != 0)
 		ORDER BY  sn DESC 
 		LIMIT 4
 	) 
@@ -385,7 +388,8 @@ WITH loc1 as (
 	FROM  
 		loc 
 	WHERE 
-		(record_type <> 'active' OR record_type IS NULL)
+		(record_type <> 'active' OR record_type IS NULL) AND
+		(lat != 0 or lon != 0)
 ), 
 maxDate AS (
 	SELECT 
@@ -394,7 +398,8 @@ maxDate AS (
 	FROM 
 		loc 
 	WHERE 
-		(record_type <> 'active' OR record_type IS NULL) 
+		(record_type <> 'active' OR record_type IS NULL) AND
+		(lat != 0 or lon != 0)
 	GROUP BY mobile_id
 ),
 users1 as (
@@ -424,7 +429,8 @@ WHERE
 		WHERE     a.mobile_id=b.mobile_id and 
 		strpos(users1.viewable_mobileid,a.mobile_id) > 0 AND		
 		b.is_valid = 1 and 
-		(b.record_type <> 'active' OR b.record_type IS NULL) 
+		(b.record_type <> 'active' OR b.record_type IS NULL) AND
+		(b.lat != 0 or b.lon != 0)
 		ORDER BY  sn DESC 		
 	) 
 ORDER BY  

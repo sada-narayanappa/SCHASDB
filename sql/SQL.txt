@@ -760,3 +760,5 @@ WHERE
 	record_type ='INHALER' 
 GROUP BY 
 	measured_at::date
+ORDER BY 
+	measured_at::date

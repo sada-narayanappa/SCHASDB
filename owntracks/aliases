@@ -1,0 +1,5 @@
+alias mosi='sudo vi /etc/mosquitto/mosquitto.conf'
+alias moss='sudo mosquitto -c /etc/mosquitto/mosquitto.conf'
+alias mosU='mosquitto_sub -h www.geospaces.org -p 8883 -v -t 'owntracks/#' -u owntracks -P a'
+alias mosU='mosquitto_sub -h www.geospaces.org -p 8883 -v -t 'owntracks/#' -u owntracks -P a -c -q 1 -i "i" -R'
+

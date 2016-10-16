@@ -1,0 +1,6 @@
+#In terminal 1 start
+mosquitto_sub -h www.geospaces.org -p 443 -v -d -t hello/world -u owntracks -P a
+
+#In terminal 2
+mosquitto_pub -h www.geospaces.org -p 443 -d -t hello/world -u owntracks -P a -m "Sada"
+

@@ -1,0 +1,4 @@
+See:
+
+https://www.digitalocean.com/community/questions/how-to-setup-a-mosquitto-mqtt-server-and-receive-data-from-owntracks
+

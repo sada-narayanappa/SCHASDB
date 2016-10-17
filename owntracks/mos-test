@@ -1,6 +1,10 @@
-#In terminal 1 start
-mosquitto_sub -h www.geospaces.org -p 443 -v -d -t hello/world -u owntracks -P a
+#In terminal 1
+mosquitto_sub -h www.geospaces.org -p 8883 -u owntracks -P a -v -t "test/#" -c  -i "test1" -q 1
 
-#In terminal 2
-mosquitto_pub -h www.geospaces.org -p 443 -d -t hello/world -u owntracks -P a -m "Sada"
+#In terminal 2 start and type
+mosquitto_pub -h www.geospaces.org -p 8883 -u owntracks -P a -t "test/topic" -m "sada1" -q 1
+mosquitto_pub -h www.geospaces.org -p 8883 -u owntracks -P a -t "test/topic" -m "sada2" -q 1
+mosquitto_pub -h www.geospaces.org -p 8883 -u owntracks -P a -t "test/topic" -m "sada3" -q 1
 
+# Now, if you control-c first terminal and execute the three commands in second terminal
+# and start the first terminal command, you shoul see all the messages 

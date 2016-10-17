@@ -2,3 +2,6 @@ See:
 
 https://www.digitalocean.com/community/questions/how-to-setup-a-mosquitto-mqtt-server-and-receive-data-from-owntracks
 
+#A good example is in:
+https://nullr0ute.com/2016/05/getting-started-with-mqtt-using-the-mosquitto-broker-on-fedora/
+

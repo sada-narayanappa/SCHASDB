@@ -1,4 +1,4 @@
-mosquitto_sub -h www.geospaces.org -p 8883 -u owntracks -P a -v -t "test/#" -c  -i "test1" -q 1
+mosquitto_sub -h www.geospaces.org -p 8883 -u owntracks -P a -v -t "test/#" -c  -i "test1" -q 1 -R
 
 #In terminal 2 start and type
 mosquitto_pub -h www.geospaces.org -p 8883 -u owntracks -P a -t "test/topic" -m "sada1" -q 1

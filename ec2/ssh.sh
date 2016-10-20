@@ -1,2 +1,2 @@
-ssh -i "schas.pem" centos@52.33.74.132 
+ssh -i "schas.pem" centos@35.160.176.139
 

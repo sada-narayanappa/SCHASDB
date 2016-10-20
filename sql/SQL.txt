@@ -762,3 +762,19 @@ GROUP BY
 	measured_at::date
 ORDER BY 
 	measured_at::date
+#--------------------------------------------------------------------------
+46
+--Returns the number of times an inhaler was used for a given mobile_id within the last given number of days
+SELECT 
+	measured_at::date AS measuredate, 
+	COUNT(*) AS numinhaler 
+FROM 
+	loc 
+WHERE 
+	mobile_id = $mobile_id  AND 
+	record_type ='INHALER' AND 
+	measured_at > NOW() - INTERVAL '$days days' 
+GROUP BY 
+	measured_at::date 
+ORDER BY 
+	measured_at::date

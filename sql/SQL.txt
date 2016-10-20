@@ -773,7 +773,7 @@ FROM
 WHERE 
 	mobile_id = $mobile_id  AND 
 	record_type ='INHALER' AND 
-	measured_at > NOW() - INTERVAL '$days days' 
+	measured_at > NOW() - INTERVAL $days || ' days' 
 GROUP BY 
 	measured_at::date 
 ORDER BY 

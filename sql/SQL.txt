@@ -778,3 +778,14 @@ GROUP BY
 	measured_at::date 
 ORDER BY 
 	measured_at::date
+#--------------------------------------------------------------------------
+47
+-- select ownt points
+SELECT 
+	* 
+FROM 
+	ownt 
+ORDER BY 
+	id,
+	measured_at 
+LIMIT 1000

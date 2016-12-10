@@ -22,7 +22,7 @@ def getTypeNames(con):
     rows = cur.fetchall();
     for row in  rows:
         typeInfoDict[row[0]] =  row[1];
-    #print typeInfoDict;
+    #print(typeInfoDict)
     return typeInfoDict;
 #===============================================================================
 def connect(connectionInformation= defConnection):
@@ -42,7 +42,7 @@ def getType(num):
     else:
         return None
         
-def ColumnFormat(row, typeM):
+def ColumnFormat(row, typeS, typeM):
     rf = [];
     for i,rv in enumerate(row):
         if (rv is None or not rv):
@@ -68,30 +68,21 @@ def ColumnFormat(row, typeM):
 #
 # cur = con.cursor(); cur.execute(q); rows  = cur.fetchall();
 #
-def runSQL(con, q= "SELECT datname from pg_database", output=False, title= "", returnTypeInfo = False,
-           fetchSize = 100000):
+def runSQL(con, q= "SELECT datname from pg_database order by datname", output=False, title= None):
     cur = con.cursor()
     cur.execute(q)
-    rowCount = cur.rowcount;
 
     if ( cur.description == None):
-        return None, None, rowCount, None, None
+        return None, None, None, None
 
-    rows  = cur.fetchmany(fetchSize);
-    rowCount = cur.rowcount;
-
+    rows  = cur.fetchall();
     cols  = [cn[0] for cn in cur.description]
-    typeI = [] #
-    typeS = [] # Typenames in Strings
-
-    if (returnTypeInfo):
-        if (len(typeInfoDict) <= 0 ):
-            getTypeNames(con);
-        typeS = [typeInfoDict[cn[1]] + "(" + str(cn[1]) + ")" for cn in cur.description]
-        typeI =[cn[1] for cn in cur.description]
+    typeM = [cn[1] for cn in cur.description]
+    typeS = [typeInfoDict[cn[1]] + "(" + str(cn[1]) + ")" for cn in cur.description]
 
     if ( output):
-        print (title, end='')
+        if (title):
+            print ("==> %s\n", (title))
         fmt = (",%s"*len(cols))[1:]
         print ("--Names: " + fmt % tuple(cols))
         print ("--Types: " + fmt % tuple(typeS))
@@ -99,19 +90,10 @@ def runSQL(con, q= "SELECT datname from pg_database", output=False, title= "", r
         print ("\n")
 
         for row in  rows:
-            nrow = ColumnFormat(row, typeI)
+            nrow = ColumnFormat(row, typeS, typeM)
             print (fmt % tuple(nrow))
 
-    return cols, rows, rowCount, typeI, typeS
-
-def Json(cols, rows, rowCount, typeI, typeS, fmt="html", hasUtf8=False):
-    json = "";
-
-    return json;
-#===============================================================================
-# Documentation and example use below
-# SOme utility functions are below - but mostly you won't need them
-#
+    return cols, typeM, rows, typeS
 #===============================================================================
 def genSQL(connection, tableName, limit = 10):
     q = "select * from " + tableName + " limit 1";
@@ -125,6 +107,8 @@ def genSQL(connection, tableName, limit = 10):
     q = "SELECT " + scols[1:] + " FROM " + tableName;
     q = q + " LIMIT " + str(limit) if limit > 0 else "";
     return q;
+
+
 #===============================================================================
 # Simple function to get the table info
 #
@@ -138,7 +122,11 @@ def table(connection, tableName, hasGeom=False, output=True, limit=10):
         print ("\n--Query: " + q, "\nNumber of Rows: " , len(r2));
 
     return (q, c2,t2,r2, typeS2)
-
+#===============================================================================
+# Documentation and example use below
+#
+#
+#===============================================================================
 def Test():
 	con1= '''
 dbname  = 'SCHASDB'
@@ -150,7 +138,7 @@ port    = 5433
     # First  example:
 	connection = None;
 	connection = connect(con1)
-	table(connection, "<<tableName>>", True, 5)
+	table(connection, tableName, True, 5)
 	
 	
 	

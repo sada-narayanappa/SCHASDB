@@ -24,17 +24,34 @@ connection.autocommit = True
 SQL1= '''
 INSERT INTO ownt(id, lat, lon, acc, battery, tid, measured_at, notes, the_geom)
 VALUES (
-'$id', $lat, $lon, $acc, $batt, '$tid', to_timestamp($tst), '$notes',
+'$id', $lat, $lon, $acc, $batt, '$tid', to_timestamp($tst) at time zone 'utc', '$notes',
 ST_GeomFromText('POINT(' || $lon || ' ' || $lat || ')',4326)
 )
 '''
+SQL2='''
+INSERT INTO loc (
+    mobile_id, lat, lon, speed, accuracy, session_num, user_id, measured_at,  api_key, the_geom
+)
+VALUES (
+    '$id', $lat, $lon, 20, $acc, '1', '$id', to_timestamp($tst) at time zone 'utc', 'api_key',
+    ST_GeomFromText('POINT(' || $lon || ' ' || $lat || ')',4326)
+)
+'''
+
+sql3='''INSERT INTO loc (mobile_id, lat, lon, accuracy, session_num, user_id, measured_at, stored_at, api_key, the_geom)
+select 'ownt', lat, lon, acc, '1', id, measured_at, stored_at, 'api_key', the_geom FROM ownt'''
+
 #Process JSON data
 def process(topic, data, notes):
     t = data['_type']
     if ( t != "location"):
         return;
     id = topic.split("/")[-1]
-    s = SQL1;
+    id= "ownt - " + id;
+    #if (not id.startswith('79f') ):
+	#    mid = "ownt - ";
+
+    s = SQL2;
 
     d = collections.OrderedDict(sorted(data.items(), reverse = True))
     for t in d:

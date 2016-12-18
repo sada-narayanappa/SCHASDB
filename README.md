@@ -13,4 +13,5 @@ sudo service iptables restart
 sudo apachectl start 
 
 sudo service postgresql-9.4 start
+sudo service postgresql-9.4 reload
 

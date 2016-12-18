@@ -3,3 +3,4 @@ alias moss='sudo mosquitto -c /etc/mosquitto/mosquitto.conf'
 alias mosU='mosquitto_sub -h www.geospaces.org -p 8883 -v -t 'owntracks/#' -u owntracks -P a'
 alias mosU='mosquitto_sub -h www.geospaces.org -p 8883 -u owntracks -P a -c -i "SCHAS" -R -t 'owntracks/#''
 alias mosU="mosquitto_sub -h www.geospaces.org -p 8883 -u owntracks -P a -c -i "SCHAS" -t 'owntracks/#' -R -q 1"
+ alias otr="ot-recorder 'owntracks/#'"

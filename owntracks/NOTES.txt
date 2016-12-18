@@ -5,3 +5,66 @@ https://www.digitalocean.com/community/questions/how-to-setup-a-mosquitto-mqtt-s
 #A good example is in:
 https://nullr0ute.com/2016/05/getting-started-with-mqtt-using-the-mosquitto-broker-on-fedora/
 
+#SET for auto start
+https://alexander-rudde.com/2014/02/install-mosquitto-mqtt-broker-on-raspberry-pi-running-arch-linux/
+
+#Install mosquitto with websockets
+See: https://www.justinribeiro.com/chronicle/2014/10/22/mosquitto-libwebsockets-google-compute-engine-setup/
+
+INSTALLING:
+===========
+STEP 1.
+
+See: https://github.com/owntracks/recorder#installing
+Install using the above URL. Here is the summary:
+
+sudo curl -o /etc/yum.repos.d/mosquitto.repo http://download.opensuse.org/repositories/home:/oojah:/mqtt/CentOS_CentOS-7/home:oojah:mqtt.repo
+sudo curl -o /etc/yum.repos.d/owntracks.repo http://repo.owntracks.org/centos/owntracks.repo
+
+sudo yum install mosquitto
+sudo yum install ot-recorder
+
+
+STEP 2:
+
+Copy the file mosquitto.conf from this directory to /etc/mosquitto
+[ ] cp mosquitto.conf /etc/mosquitto
+
+
+STEP 3.
+
+Then see: https://alexander-rudde.com/2014/02/install-mosquitto-mqtt-broker-on-raspberry-pi-running-arch-linux/
+This is to install it as service. 
+
+Create a .service file /etc/systemd/system/mosquitto.service with this content
+-----------------------
+[Unit]
+Description=Mosquitto MQTT Broker daemon
+ConditionPathExists=/etc/mosquitto/mosquitto.conf
+Requires=network.target
+
+[Service]
+Type=simple
+ExecStartPre=/usr/bin/rm -f /var/run/mosquitto.pid
+ExecStart=/usr/local/sbin/mosquitto -c /etc/mosquitto/mosquitto.conf -d
+ExecReload=/bin/kill -HUP $MAINPID
+PIDFile=i/var/run/mosquitto.pid
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+----------------------
+
+And then Enable and start
+
+
+[ ] sudo systemctl enable mosquitto
+[ ] sudo systemctl start mosquitto
+[ ] systemctl status mosquitto
+
+
+STE 4:
+
+Test your service by sending a message:
+mosquitto_pub -h www.geospaces.org -p 8883 -u owntracks -P a -t "test/topic" -m "sada3" -q 1
+

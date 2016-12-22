@@ -4,7 +4,6 @@ https://www.digitalocean.com/community/questions/how-to-setup-a-mosquitto-mqtt-s
 #A good example is in:
 https://nullr0ute.com/2016/05/getting-started-with-mqtt-using-the-mosquitto-broker-on-fedora/
 
-<<<<<<< HEAD
 #SET for auto start
 https://alexander-rudde.com/2014/02/install-mosquitto-mqtt-broker-on-raspberry-pi-running-arch-linux/
 
@@ -72,8 +71,7 @@ mosquitto_pub -h www.geospaces.org -p 8883 -u owntracks -P a -t "test/topic" -m 
 '''
 pip install psycopg2
 IN Older Mac's do this
->>>> sudo ln -s /anaconda/lib/libssl.1.0.0.dylib  /usr/lib/
->>>> sudo ln -s /anaconda/lib/libcrypto.1.0.0.dylib  /usr/lib/
+sudo ln -s /anaconda/lib/libcrypto.1.0.0.dylib  /usr/lib/
 '''
 IN Newer MAC - do the following
 
@@ -88,5 +86,4 @@ In another terminal start:
 
 RUN
 [ ] UNSET LC_ALL # IF YOU GET UnicodeEncodeError: 'ascii' codec can't encode character ERRORS
->>>>>>> 21224bffd958b0638cf1f2b1f75a6a34f83a374f
 

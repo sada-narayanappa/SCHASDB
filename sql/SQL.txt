@@ -791,3 +791,39 @@ ORDER BY
 	id,
 	measured_at 
 LIMIT 1000
+#--------------------------------------------------------------------------
+48
+SELECT 
+	mobile_id, 
+	users.fname, 
+	users.lname, 
+	users.cname, 
+	MAX(measured_at::DATE) AS recentUpload 
+FROM 
+	loc 
+LEFT OUTER JOIN users 
+ON users.mobileid = loc.mobile_id 
+WHERE 
+	(record_type <> 'active' OR record_type IS NULL) AND
+	(lat != 0 or lon != 0)
+GROUP BY mobile_id
+#--------------------------------------------------------------------------
+49	
+WITH uploaddates AS (
+	SELECT 
+		distinct measured_at::DATE  as sn  
+	FROM 
+		loc b 
+	WHERE    
+		b.mobile_id=$mobile_id AND 
+		b.is_valid = 1 and 
+		(b.record_type <> 'active' OR b.record_type IS NULL) AND 
+		(b.lat != 0 or b.lon != 0) ORDER BY  sn DESC
+) 
+SELECT 
+	sn,rn 
+FROM 
+	(SELECT sn, ROW_NUMBER() OVER () AS rn FROM uploaddates) uploaddates2 
+WHERE 
+	rn>$row 
+LIMIT 5

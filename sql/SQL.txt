@@ -794,19 +794,27 @@ LIMIT 1000
 #--------------------------------------------------------------------------
 48
 SELECT 
-	mobile_id, 
-	users.fname, 
-	users.lname, 
-	users.cname, 
+	mobile_id,
+	users.fname,
+	users.lname,
+	users.cname,
 	MAX(measured_at::DATE) AS recentUpload 
 FROM 
 	loc 
-LEFT OUTER JOIN users 
-ON users.mobileid = loc.mobile_id 
+LEFT OUTER JOIN 
+	users 
+ON 
+	users.mobileid = loc.mobile_id 
 WHERE 
-	(record_type <> 'active' OR record_type IS NULL) AND
-	(lat != 0 or lon != 0)
-GROUP BY mobile_id
+	(record_type <> 'active' OR record_type IS NULL) AND 
+	(lat != 0 or lon != 0) 
+GROUP BY 
+	mobile_id,
+	users.fname,
+	users.lname,
+	users.cname 
+ORDER BY 
+	recentUpload DESC
 #--------------------------------------------------------------------------
 49	
 WITH uploaddates AS (

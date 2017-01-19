@@ -816,7 +816,7 @@ GROUP BY
 ORDER BY 
 	recentUpload DESC
 #--------------------------------------------------------------------------
-49	
+49
 WITH uploaddates AS (
 	SELECT 
 		distinct measured_at::DATE  as sn  

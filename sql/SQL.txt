@@ -835,3 +835,16 @@ FROM
 WHERE 
 	rn>$startrow 
 LIMIT 5
+#--------------------------------------------------------------------------
+50
+--Returns the number of times an inhaler was used for a given mobile_id within the last given number of days
+SELECT 
+	*
+FROM 
+	loc 
+WHERE 
+	mobile_id = $mobile_id  AND 
+	record_type ='gps' AND 
+	measured_at > NOW() - INTERVAL $time
+ORDER BY 
+	measured_at::date

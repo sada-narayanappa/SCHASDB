@@ -848,3 +848,23 @@ WHERE
 	measured_at > NOW() - INTERVAL $time
 ORDER BY 
 	measured_at::date
+#--------------------------------------------------------------------------
+51
+--Returns the number of users with a given mobileid
+SELECT 
+	COUNT(*)
+FROM 
+	users 
+WHERE 
+	mobileid = $mobileid
+#--------------------------------------------------------------------------
+52
+--Inserts into users a new user with given mobileid and firebasetoken
+INSERT INTO users (mobileid, firebasetoken)
+VALUES ($mobileid, $firebasetoken)
+#--------------------------------------------------------------------------
+53
+--Update users firebase token
+UPDATE users
+SET firebasetoken = $firebasetoken
+WHERE mobileid=$mobileid

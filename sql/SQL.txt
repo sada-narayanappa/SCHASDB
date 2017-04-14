@@ -868,3 +868,12 @@ VALUES ($mobileid, $firebasetoken)
 UPDATE users
 SET firebasetoken = $firebasetoken
 WHERE mobileid=$mobileid
+#--------------------------------------------------------------------------
+54
+--Returns the firebasetoken of a given mobileid
+SELECT 
+	firebasetoken
+FROM 
+	users 
+WHERE 
+	mobileid = $mobileid

@@ -877,3 +877,11 @@ FROM
 	users 
 WHERE 
 	mobileid = $mobileid
+#--------------------------------------------------------------------------
+55
+--Returns all the mobileids and firebasetokens
+SELECT
+	mobileid,
+	firebasetoken
+FROM
+	users
